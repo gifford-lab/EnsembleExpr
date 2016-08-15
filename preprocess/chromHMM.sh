@@ -4,8 +4,9 @@
 #
 OIFS=$IFS
 IFS=$'\n'
-states="../data/E116_18_core_K27ac_mnemonics.bed.gz" # roadmap
+#states="../data/E116_18_core_K27ac_mnemonics.bed.gz" # roadmap
 # states="../data/wgEncodeBroadHmmGm12878HMM.bed.gz" # ernst
+states=$2
 for line in `cat $1 | cut -f 1-3 | grep -v "^#"`; do # ignore comments
     id=`echo $line | cut -f 3`
     chr=`echo $line | cut -f 1`
