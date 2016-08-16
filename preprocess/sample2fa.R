@@ -24,7 +24,7 @@ convert <- function(infile,outdir){
 		toVCF(part,file.path(vcfdir,paste0('chr',chr,'.vcf')))
 	}
 
-	cmd = paste0('Rscript  /cluster/zeng/code/research/tools/REFORMAT/vcf2fasta.R ',vcfdir,' /cluster/zeng/research/hg19_data/hg19.in /cluster/zeng/research/hg19_data/seq_data/all.size.txt ',fadir,' 74.9 T')
+	cmd = paste0('Rscript  ../vcf2fasta.R ',vcfdir,' ../data/hg19.in ../data/all.size.txt ',fadir,' 74.9 T')
 	system(cmd)
 	
 	confa = tempfile()

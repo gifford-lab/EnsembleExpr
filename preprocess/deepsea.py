@@ -22,18 +22,17 @@ def convert(infile,outfile):
                 for item in outstring:
                     fout.write('%s\n' % item)
 
-infile = NamedTemporaryFile(delete=False).name
+infile = '/script/test.fasta'
 convert(fafile,infile)
 
-#tmpoutdir = mkdtemp()
-tmpoutdir = join(topdir,'deepsea_tmp')
-system('docker pull haoyangz/deepsea-predict-docker')
-system(' '.join(['docker run ','-v',infile+':/infile.fasta','-v',tmpoutdir+':/output --rm haoyangz/deepsea-predict-docker python rundeepsea.py /infile.fasta /output']))
+tmpoutdir = '/script/deepsea_tmp'
+chdir('/root/DeepSEA-v0.94/')
+system(' '.join(['python','rundeepsea.py',infile,tmpoutdir]))
 
 outfile = join(tmpoutdir,'infile.fasta.out')
 outfile_final = join(topdir,'deepsea_919feature')
 system(' '.join(['cut -d \",\" -f 3- --output-delimiter=\'\t\' ',outfile,'>',outfile_final]))
 
-#system('rm -r ' + tmpoutdir)
+system('rm -r ' + tmpoutdir)
 remove(infile)
 
