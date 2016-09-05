@@ -1,6 +1,6 @@
 from signal import signal, SIGPIPE, SIG_DFL
 import sys,cPickle,subprocess,numpy as np
-from os.path import join,abspath,dirname,exists
+from os.path import join,abspath,dirname,exists,basename
 from os import system,chdir,makedirs
 from tempfile import NamedTemporaryFile
 
@@ -12,8 +12,10 @@ if not exists(outdir):
 
 # Generate sequence feature
 print '#### Getting 150bp sequence from VCF ####'
+vcffile_processed = join(outdir,basename(vcffile)+'_woheader')
+system(' '.join(['sed \'/^#/ d\'','<',vcffile,'>',vcffile_processed]))
 chdir(cwd)
-system(' '.join(['Rscript',join(cwd,'sample2fa.R'), vcffile, outdir]))
+system(' '.join(['Rscript',join(cwd,'sample2fa.R'), vcffile_processed, outdir]))
 
 # Generate DeepBind feature
 print '#### Getting DeepBind features ####'
