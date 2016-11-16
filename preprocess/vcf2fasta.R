@@ -1,4 +1,4 @@
-source('/script/utility.R')
+source('utility.R')
 require('snow')
 args = commandArgs(T)
 vcfdir = args[1]
@@ -33,7 +33,7 @@ files = files[pick]
 
 cl <- makeCluster(11, type = "SOCK") 
 clusterExport(cl, c("files","vcfdir","genomefile","offsetfile","flank_len","out_dir","combine_allele")) 
-cc = clusterCall(cl,function(){source('/script/utility.R')})
+cc = clusterCall(cl,function(){source('utility.R')})
 run <- function(i){
 	if (combine_allele=='T'){
 		ref_con = file(file.path(out_dir,paste0('fa',i)),open='w')    		

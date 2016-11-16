@@ -15,7 +15,7 @@ print '#### Getting 150bp sequence from VCF ####'
 vcffile_processed = join(outdir,basename(vcffile)+'_woheader')
 system(' '.join(['sed \'/^#/ d\'','<',vcffile,'>',vcffile_processed]))
 chdir(cwd)
-system(' '.join(['Rscript',join(cwd,'sample2fa.R'), vcffile_processed, outdir]))
+system(' '.join(['Rscript',join(cwd,'sample2fa.R'), vcffile_processed, outdir,'../data']))
 
 # Generate DeepBind feature
 print '#### Getting DeepBind features ####'
@@ -35,8 +35,7 @@ system(' '.join(['cp',join(ksm_folder,'input.m0.scorematrix.txt'),join(outdir,'k
 # Generate ChromHMM feature files.
 print '#### Getting ChromHMM features ####'
 chdir(cwd)
-cmd = ' '.join([join(cwd,'chromHMM.sh'), vcffile,join(cwd,'../data/E116_18_core_K27ac_mnemonics.bed.gz'),'>',join(outdir,'roadmap_E116_chromatin_states')])
-subprocess.call(cmd ,shell = True,preexec_fn = lambda: signal(SIGPIPE, SIG_DFL))
+system(' '.join(['python',join(cwd,'chromHMM.py'),vcffile,join(outdir,'roadmap_E116_chromatin_states')]))
 
 # Combile features for each component in the ensemble
 filemapping = {'deepsea':'deepsea_919feature','deepbind':'deepbind_927feature','roadmap':'roadmap_E116_chromatin_states','ksm':'ksm'}

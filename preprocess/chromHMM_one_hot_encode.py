@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
-# 
-# Convert 
+#
+# Convert
 import pandas
 import sys
 
@@ -20,4 +20,6 @@ for i, label in enumerate(labels):
 
 # Print one-hot representation for each input row.
 for line in sys.stdin:
-    print label_mapper[line.strip()]
+    x = label_mapper[line.strip()]
+    print x
+    print x

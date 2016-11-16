@@ -2,6 +2,7 @@ args = commandArgs(T)
 
 infile = args[1]
 outdir = args[2]
+genomedir = args[3]
 
 toVCF <- function(mat,vcffile){
 	write.table(mat,file=vcffile,quote=F,row.names=F,col.names=F,sep='\t')
@@ -24,7 +25,7 @@ convert <- function(infile,outdir){
 		toVCF(part,file.path(vcfdir,paste0('chr',chr,'.vcf')))
 	}
 
-	cmd = paste0('Rscript  ../vcf2fasta.R ',vcfdir,' ../data/hg19.in ../data/all.size.txt ',fadir,' 74.9 T')
+	cmd = paste0('Rscript  vcf2fasta.R ',vcfdir,' ',file.path(genomedir,'hg19.in'),' ',file.path(genomedir,'all.size.txt'),' ',fadir,' 74.9 T')
 	system(cmd)
 	
 	confa = tempfile()
